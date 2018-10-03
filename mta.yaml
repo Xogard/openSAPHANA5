@@ -1,0 +1,34 @@
+_schema-version: '2.0'
+ID: openSAPHANA5
+description: openSAP HANA5 Group 01
+version: 0.0.1
+
+modules:
+- name: web
+  type: html5
+  path: web
+  requires:
+   - name: openSAPHANA5_XSA_GCORDEIRO
+      
+- name: core_db
+  type: hdb
+  path: core_db
+  requires:
+   - name: hdi_core_db
+     properties:
+      TARGET_CONTAINER: ~{hdi-container-name}
+
+
+resources:
+  - name: openSAPHANA5_XSA_GCORDEIRO
+    type: com.sap.xs.uaa
+    parameters:
+     config_path: ./xs-security.json
+     
+  - name: hdi_core_db
+    properties:
+     hdi-container-name: ${service-name}
+    type: com.sap.xs.hdi-container
+    parameters:
+     config:
+      schema: OPENSAP_HANA5_GCORDEIRO
