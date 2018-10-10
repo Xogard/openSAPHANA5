@@ -1,0 +1,8 @@
+{
+  "Dummy": {
+    "target": {
+      "object": "DUMMY",
+      "schema": "SYS"
+    }
+  }
+}
