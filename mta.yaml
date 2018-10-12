@@ -15,12 +15,16 @@ modules:
       - name: hdi_core_db
         properties:
           TARGET_CONTAINER: '~{hdi-container-name}'
-          
       - name: user_container
         group: SERVICE_REPLACEMENTS 
         properties:
           key: hdi-user-service
           service: '~{user_container_name}'
+      - name: CrossSchemaService
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: hdi-sflight-service
+          service: '~{sflight-service-name}'
   - name: user_db
     type: hdb
     path: user_db
@@ -28,7 +32,7 @@ modules:
       - name: user_container
         properties:
           TARGET_CONTAINER: ~{user_container_name}
-        
+          
 resources:
   - name: openSAPHANA5_XSA_GCORDEIRO
     type: com.sap.xs.uaa
@@ -41,7 +45,13 @@ resources:
     parameters:
       config:
         schema: OPENSAP_HANA5_GCORDEIRO
-        
+  - name: CrossSchemaService
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: CROSS_SCHEMA_SFLIGHT_XSA_GCORDEIRO
+    properties:
+      sflight-service-name: '${service-name}'
+      
   - name: user_container
     type: com.sap.xs.hdi-container
     properties:
@@ -49,3 +59,5 @@ resources:
     parameters:
       config:
         schema: OPENSAP_HANA_XSA_GCORDEIRO
+
+
